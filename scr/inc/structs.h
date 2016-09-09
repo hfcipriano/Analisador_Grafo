@@ -32,6 +32,8 @@ typedef struct GRAFO{
     lista   *vertices;
     lista   *arestas;
     void    (*addVertice)(struct GRAFO*, node*);
+    void    (*addAresta)(struct GRAFO*, node*);
     void    (*printVertices)(struct GRAFO*);
+    void    (*printArestas)(struct GRAFO*);
     void    (*printGrafo)(struct GRAFO*);
 }grafo;

@@ -8,6 +8,10 @@ void addVertice(grafo *g, node* vertice){
     g->vertices->addNodeFinal(g->vertices, vertice);
 }
 
+void addAresta(grafo *g, node* aresta){
+    g->arestas->addNodeFinal(g->arestas, aresta);
+}
+
 void printVertices(grafo *g){
     node *n = g->vertices->raiz;
     printf("Vertices = (");
@@ -21,6 +25,20 @@ void printVertices(grafo *g){
     printf("\n");
 }
 
-void printGrafo(grafo *g){
+void printArestas(grafo *g){
+    node *n = g->arestas->raiz;
+    printf("Arestas = (");
+    while(n != NULL){
+        aresta *aresta= n->elemento;
+        printf("%s - ", (char*)aresta->valor);
+        printf("(%s, %s); ", (char*)aresta->antecessor->valor, (char*)aresta->sucessor->valor);
+        n = n->proximo;
+        printf(", ");
+    }
+    printf(")");
+    printf("\n");
+}
 
+void printGrafo(grafo *g){
+    //:TODO Implementar
 }
