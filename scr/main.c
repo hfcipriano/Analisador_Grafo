@@ -6,13 +6,22 @@
 #include "inc/structs.h"
 
 extern lista *newLista();
-extern node *newNode(int);
+extern grafo *newGrafo();
+extern node *newNode(void*);
+extern node *newVertice(char*);
+extern node *newAresta(char*, vertice*, vertice*);
+grafo *newGrafoLocal();
 
 int main(){
-    lista *l = newLista();
-    l->addNodeInicio(l, newNode(1));
-    l->addNodeInicio(l, newNode(2));
-    l->printListaTexto(l);
+    grafo *g = newGrafoLocal();
+    g->addVertice(g, newNode(newVertice((char*) "asdfdfsdfsa")));
 
+    g->printVertices(g);
     return 0;
+}
+
+grafo *newGrafoLocal(){
+    grafo *g = newGrafo();
+    g->vertices = newLista();
+    return g;
 }

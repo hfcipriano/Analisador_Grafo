@@ -3,8 +3,6 @@
 //
 
 #include "../../inc/structs.h"
-void printListaTexto(lista*);
-void printListaBin(lista*);
 void addNodeInicio(lista*,node*);
 void addNodeFinal(lista*,node*);
 void desconectaNode(lista*,node*);
@@ -17,8 +15,6 @@ lista *newLista(){
     l->raiz = NULL;
     l->folha = NULL;
     l->qtd = 0;
-    l->printListaTexto = printListaTexto;
-    l->printListaBin = printListaBin;
     l->addNodeInicio = addNodeInicio;
     l->addNodeFinal = addNodeFinal;
     l->desconectaNode = desconectaNode;

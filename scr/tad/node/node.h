@@ -4,11 +4,10 @@
 
 #include "../../inc/structs.h"
 void printNode(node*);
-node *newNode(int v){
+node *newNode(void *info){
     node *n = (node*)malloc(sizeof(node));
-    n->valor = v;
+    n->elemento = info;
     n->proximo = NULL;
     n->anterior = NULL;
-    n->printNode = printNode;
     return n;
 }

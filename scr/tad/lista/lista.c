@@ -1,25 +1,6 @@
 #include "../../inc/bibliotecas.h"
 #include "lista.h"
 
-void printListaTexto(lista *l){
-    node *n = l->raiz;
-    while(n != NULL){
-        n->printNode(n);
-        n = n->proximo;
-    }
-    printf("\n");
-}
-
-void printListaBin(lista *l){
-    node *n = l->raiz;
-    int i=0, *dados = (int*)malloc(l->qtd*sizeof(int));
-    for(i=0; i<l->qtd; i++){
-        dados[i] = n->valor;
-        n = n->proximo;
-    }
-    fwrite(dados,sizeof(int),l->qtd,stdout);
-}
-
 void addNodeInicio(lista *l,node *n){
     node *r = l->raiz;
     l->raiz = n;
@@ -60,11 +41,6 @@ void addNodeFinal(lista *l,node *n){
         f->proximo = n;
         n->anterior = f;
         l->folha = n;
-        /*while(r->proximo != NULL){
-            r = r->proximo;
-        }*/
-        //r->proximo = n;
-        //n->anterior = r;
     }
     l->qtd++;
 }
