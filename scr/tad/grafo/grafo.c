@@ -14,28 +14,32 @@ void addAresta(grafo *g, node* aresta){
 
 void printVertices(grafo *g){
     node *n = g->vertices->raiz;
-    printf("Vertices = (");
+    printf("Vertices = {");
     while(n != NULL){
         vertice *vertice = n->elemento;
         printf("%s", (char*)vertice->valor);
         n = n->proximo;
-        printf(", ");
+        if(n != NULL) {
+            printf(", ");
+        }
     }
-    printf(")");
+    printf("}");
     printf("\n");
 }
 
 void printArestas(grafo *g){
     node *n = g->arestas->raiz;
-    printf("Arestas = (");
+    printf("Arestas = {");
     while(n != NULL){
         aresta *aresta= n->elemento;
-        printf("%s - ", (char*)aresta->valor);
-        printf("(%s, %s); ", (char*)aresta->antecessor->valor, (char*)aresta->sucessor->valor);
+        //printf("(%s - ", (char*)aresta->valor);
+        printf("(%s, %s)", (char*)aresta->antecessor->valor, (char*)aresta->sucessor->valor);
         n = n->proximo;
-        printf(", ");
+        if(n != NULL) {
+            printf(", ");
+        }
     }
-    printf(")");
+    printf("}");
     printf("\n");
 }
 
