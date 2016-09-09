@@ -8,6 +8,7 @@ void    addAresta(grafo*, node*);
 void    printVertices(grafo*);
 void    printArestas(grafo*);
 void    printGrafo(grafo*);
+int     existeCaminho(grafo*, aresta*);
 
 grafo *newGrafo(){
     grafo *g = (grafo*)malloc(sizeof(grafo));
@@ -16,5 +17,6 @@ grafo *newGrafo(){
     g->printVertices = printVertices;
     g->printArestas = printArestas;
     g->printGrafo = printGrafo;
+    g->existeCaminho = existeCaminho;
     return g;
 }

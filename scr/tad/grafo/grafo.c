@@ -46,3 +46,15 @@ void printArestas(grafo *g){
 void printGrafo(grafo *g){
     //:TODO Implementar
 }
+
+int existeCaminho(grafo *g, aresta *a){
+    node *n = g->arestas->raiz;
+    while(n != NULL){
+        aresta *aresta= n->elemento;
+        if(aresta->equals(aresta, a)){
+            return 1;
+        }
+        //TODO: Validar outros caminhos possíveis
+    }
+    return 0;
+}

@@ -8,7 +8,6 @@ typedef struct LISTA{
     node    *raiz;
     node	*folha;
     int     qtd;
-    void    (*printListaTexto)(struct LISTA*);
     void    (*addNodeInicio)(struct LISTA*, node*);
     void    (*addNodeFinal)(struct LISTA*, node*);
     void 	(*desconectaNode)(struct LISTA*, node*);
@@ -26,6 +25,7 @@ typedef struct ARESTA{
     char *valor;
     vertice *antecessor;
     vertice *sucessor;
+    int     (*equals)(struct ARESTA*, struct ARESTA*);
 }aresta;
 
 typedef struct GRAFO{
@@ -36,4 +36,5 @@ typedef struct GRAFO{
     void    (*printVertices)(struct GRAFO*);
     void    (*printArestas)(struct GRAFO*);
     void    (*printGrafo)(struct GRAFO*);
+    int     (*existeCaminho)(struct GRAFO*, aresta*);
 }grafo;
