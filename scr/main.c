@@ -14,11 +14,11 @@ grafo *newGrafoLocal();
 
 int main(){
     grafo *g = newGrafoLocal();
-    g->addVertice(g, newNode(newVertice((char*) "a")));
-    g->addVertice(g, newNode(newVertice((char*) "b")));
+    g->addVertice(g, newNode(newVertice("a")));
+    g->addVertice(g, newNode(newVertice("b")));
     g->printVertices(g);
 
-    g->addAresta(g, newNode(newAresta((char*) "1", newVertice((char*) "a"), newVertice((char*) "b"))));
+    g->addAresta(g, newNode(newAresta("1", newVertice("a"), newVertice("b"))));
     g->printArestas(g);
     return 0;
 }
