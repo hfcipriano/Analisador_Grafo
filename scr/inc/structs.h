@@ -17,7 +17,8 @@ typedef struct LISTA{
 }lista;
 
 typedef struct VERTICE{
-    char *valor;
+    char    *valor;
+    int     (*verticeEquals)(struct VERTICE*, struct VERTICE*);
 }vertice;
 
 
@@ -25,7 +26,7 @@ typedef struct ARESTA{
     char *valor;
     vertice *antecessor;
     vertice *sucessor;
-    int     (*equals)(struct ARESTA*, struct ARESTA*);
+    int     (*arestaEquals)(struct ARESTA*, struct ARESTA*);
 }aresta;
 
 typedef struct GRAFO{

@@ -14,12 +14,17 @@ grafo *newGrafoLocal();
 
 int main(){
     grafo *g = newGrafoLocal();
-    g->addVertice(g, newNode(newVertice("a")));
-    g->addVertice(g, newNode(newVertice("b")));
-    g->printVertices(g);
 
     g->addAresta(g, newNode(newAresta("1", newVertice("a"), newVertice("b"))));
+    g->addAresta(g, newNode(newAresta("2", newVertice("b"), newVertice("c"))));
+    g->addAresta(g, newNode(newAresta("3", newVertice("c"), newVertice("d"))));
     g->printArestas(g);
+
+    aresta *aresta = newAresta("1", newVertice("a"), newVertice("d"));
+    if(g->existeCaminho(g, aresta)){
+        printf("EXISTE CAMINHO ENTRE %s E %s", aresta->antecessor->valor, aresta->sucessor->valor);
+    }
+
     return 0;
 }
 

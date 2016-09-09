@@ -4,7 +4,7 @@
 #include "../../inc/bibliotecas.h"
 #include "aresta.h"
 
-int equals(aresta *this, aresta *another){
+int arestaEquals(aresta *this, aresta *another){
     if(this == another){
         return 1;
     }
