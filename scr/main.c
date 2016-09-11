@@ -17,12 +17,16 @@ int main(){
 
     g->addAresta(g, newNode(newAresta("1", newVertice("a"), newVertice("b"))));
     g->addAresta(g, newNode(newAresta("2", newVertice("b"), newVertice("c"))));
-    g->addAresta(g, newNode(newAresta("3", newVertice("c"), newVertice("d"))));
+    g->addAresta(g, newNode(newAresta("3", newVertice("c"), newVertice("b"))));
     g->printArestas(g);
 
-    aresta *aresta = newAresta("1", newVertice("a"), newVertice("d"));
+    /*aresta *aresta = newAresta("1", newVertice("a"), newVertice("d"));
     if(g->existeCaminho(g, aresta)){
         printf("EXISTE CAMINHO ENTRE %s E %s", aresta->antecessor->valor, aresta->sucessor->valor);
+    }*/
+    vertice *v = newVertice("b");
+    if(g->existeCiclo(g, v)){
+        printf("EXISTE PELO MENOS UM CICLO PARTINDO DO VÉRTICE: %s", v->valor);
     }
 
     return 0;

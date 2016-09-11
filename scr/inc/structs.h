@@ -38,4 +38,5 @@ typedef struct GRAFO{
     void    (*printArestas)(struct GRAFO*);
     void    (*printGrafo)(struct GRAFO*);
     int     (*existeCaminho)(struct GRAFO*, aresta*);
+    int     (*existeCiclo)(struct GRAFO*, vertice*);
 }grafo;
