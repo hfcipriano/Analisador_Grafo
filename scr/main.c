@@ -17,7 +17,6 @@ int main(){
     g->addAresta(g, newNode(newAresta(newVertice("b"), newVertice("c"))));
     g->addAresta(g, newNode(newAresta(newVertice("c"), newVertice("d"))));
     g->addAresta(g, newNode(newAresta(newVertice("d"), newVertice("a"))));
-    g->addAresta(g, newNode(newAresta(newVertice("b"), newVertice("d"))));
 
     aresta *aresta = newAresta(newVertice("a"), newVertice("d"));
 
