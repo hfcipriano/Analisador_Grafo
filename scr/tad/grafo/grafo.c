@@ -7,27 +7,8 @@
 extern lista* newLista();
 extern node *newNode(void*);
 
-void addVertice(grafo *g, node* vertice){
-    g->vertices->addNodeFinal(g->vertices, vertice);
-}
-
 void addAresta(grafo *g, node* aresta){
     g->arestas->addNodeFinal(g->arestas, aresta);
-}
-
-void printVertices(grafo *g){
-    node *n = g->vertices->raiz;
-    printf("Vertices = {");
-    while(n != NULL){
-        vertice *vertice = n->elemento;
-        printf("%s", (char*)vertice->valor);
-        n = n->proximo;
-        if(n != NULL) {
-            printf(", ");
-        }
-    }
-    printf("}");
-    printf("\n");
 }
 
 void printArestas(grafo *g){

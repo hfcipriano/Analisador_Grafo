@@ -34,7 +34,6 @@ int main(){
 
 grafo *newGrafoLocal(){
     grafo *g = newGrafo();
-    g->vertices = newLista();
     g->arestas = newLista();
     return g;
 }

@@ -30,13 +30,9 @@ typedef struct ARESTA{
 }aresta;
 
 typedef struct GRAFO{
-    lista   *vertices;
     lista   *arestas;
-    void    (*addVertice)(struct GRAFO*, node*);
     void    (*addAresta)(struct GRAFO*, node*);
-    void    (*printVertices)(struct GRAFO*);
     void    (*printArestas)(struct GRAFO*);
-    void    (*printGrafo)(struct GRAFO*);
     int     (*existeCaminho)(struct GRAFO*, aresta*);
     int     (*existeCiclo)(struct GRAFO*, vertice*);
 }grafo;

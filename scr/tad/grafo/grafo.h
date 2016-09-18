@@ -3,21 +3,15 @@
 //
 
 #include "../../inc/structs.h"
-void    addVertice(grafo*, node*);
 void    addAresta(grafo*, node*);
-void    printVertices(grafo*);
 void    printArestas(grafo*);
-void    printGrafo(grafo*);
 int     existeCaminho(grafo*, aresta*);
 int     existeCiclo(grafo*, vertice*);
 
 grafo *newGrafo(){
     grafo *g = (grafo*)malloc(sizeof(grafo));
-    g->addVertice = addVertice;
     g->addAresta = addAresta;
-    g->printVertices = printVertices;
     g->printArestas = printArestas;
-    g->printGrafo = printGrafo;
     g->existeCaminho = existeCaminho;
     g->existeCiclo = existeCiclo;
     return g;
