@@ -79,20 +79,15 @@ node* swap(lista *l, node *a, node *b){
     return b;
 }
 
-int verificar(lista *l){
-    int verificar;
-    node *aux;
-    aux = l->raiz;
-    if((aux == NULL) || (aux->proximo == NULL))
-    {
-        printf("A lista deve conter mais de dois elementos!\n\n");
-        verificar = 0;
-        system("pause");
-        system("cls");
+void addListaFinal(lista *l, lista *nova){
+    if(l->qtd == 0){
+        l->raiz = nova->raiz;
+        l->qtd = nova->qtd;
+        l->folha = nova->folha;
     }
-    else
-    {
-        verificar = 1;
+    else {
+        l->folha->proximo = nova->raiz;
+        nova->raiz->anterior = l->folha;
+        l->qtd = l->qtd + nova->qtd;
     }
-    return verificar;
 }

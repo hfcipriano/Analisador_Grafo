@@ -3,12 +3,12 @@
 //
 
 #include "../../inc/structs.h"
-void addNodeInicio(lista*,node*);
-void addNodeFinal(lista*,node*);
-void desconectaNode(lista*,node*);
-node* rmNodeFinal(lista*);
-node* swap(lista*l,node*a,node*);
-int verificar(lista*);
+void    addNodeInicio(lista*,node*);
+void    addNodeFinal(lista*,node*);
+void    desconectaNode(lista*,node*);
+node*   rmNodeFinal(lista*);
+node*   swap(lista*l,node*a,node*);
+void    addListaFinal(lista*, lista*);
 
 lista *newLista(){
     lista *l = (lista*)malloc(sizeof(lista));
@@ -20,6 +20,6 @@ lista *newLista(){
     l->desconectaNode = desconectaNode;
     l->rmNodeFinal = rmNodeFinal;
     l->swap = swap;
-    l->verificar = verificar;
+    l->addListaFinal = addListaFinal;
     return l;
 }

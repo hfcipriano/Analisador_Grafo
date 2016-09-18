@@ -7,6 +7,8 @@
 extern lista* newLista();
 extern node *newNode(void*);
 
+void printCaminho(lista *l);
+
 void addAresta(grafo *g, node* aresta){
     g->arestas->addNodeFinal(g->arestas, aresta);
 }
@@ -26,8 +28,31 @@ void printArestas(grafo *g){
     printf("}\n");
 }
 
-void printGrafo(grafo *g){
-    //:TODO Implementar
+void printCaminhos(lista *list){
+    node *n = list->raiz;
+    printf("\nCaminhos = {");
+    while(n != NULL){
+        lista *l= n->elemento;
+        printCaminho(l);
+
+        n = n->proximo;
+        if(n != NULL) {
+            printf(", ");
+        }
+    }
+    printf("}\n");
+}
+
+void printCaminho(lista *l) {
+    node *n = l->raiz;
+    while(n != NULL){
+        aresta *aresta = n->elemento;
+        printf("(%s, %s)", aresta->antecessor->valor, aresta->sucessor->valor);
+        n = n->proximo;
+        if(n != NULL) {
+            printf(" -> ");
+        }
+    }
 }
 
 lista* obterAntecessores(lista *l, vertice *antecessor) {
@@ -71,8 +96,26 @@ int buscarRelacao(lista *arestas, lista *antecessores, vertice *sucessor) {
     return 0;
 }
 
+lista *buscarRelacaoCompleta(lista *arestas, lista *antecessores, vertice *sucessor, lista *auxiliar) {
+    lista *caminhos = newLista();
+
+    node *n = antecessores->raiz;
+    while(n != NULL){
+        aresta *aresta= n->elemento;
+        auxiliar->addNodeFinal(auxiliar, newNode(aresta));
+        if(aresta->sucessor->verticeEquals(aresta->sucessor, sucessor)){
+            caminhos->addNodeFinal(caminhos, newNode(auxiliar));
+        }
+        else {
+            caminhos->addListaFinal(caminhos, buscarRelacaoCompleta(arestas, obterAntecessores(arestas, aresta->sucessor), sucessor, auxiliar));
+        }
+        n = n->proximo;
+    }
+    return caminhos;
+}
+
 /**
- * Task 1: Verificar a existência de pelo menos um caminho entre dois vértices do Grafo
+ * Task 1-2: Verificar a existência de pelo menos um caminho entre dois vértices do Grafo
  * @param Grafo
  * @param Aresta contendo o vértice antecessor e o sucessor desejados
  * @return 1 para verdadeiro e 0 para falso
@@ -95,7 +138,7 @@ int existeCaminho(grafo *g, aresta *a){
 }
 
 /**
- * Task 2: Verificar a existência de um ciclo partindo de um vértice
+ * Task 3: Verificar a existência de um ciclo partindo de um vértice
  * @param Grafo
  * @param Vértice a ser utilizado como comparação
  * @return 1 para Verdadeiro e 0 para falso
@@ -103,4 +146,13 @@ int existeCaminho(grafo *g, aresta *a){
 int existeCiclo(grafo *g, vertice *v){
     lista *antecessores = obterAntecessores(g->arestas, v);
     return buscarRelacao(g->arestas, antecessores, v);
+}
+
+/**
+ * Task 4: Exibir todos os caminhos entre os vértices V1 e V2 de um grafo que podeterciclos.
+ * @param g Grafo
+ * @param a Aresta
+ */
+void exibeCaminhos(grafo *g, aresta *a){
+    printCaminhos(buscarRelacaoCompleta(g->arestas, obterAntecessores(g->arestas, a->antecessor), a->sucessor, newLista()));
 }

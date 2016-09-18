@@ -13,7 +13,7 @@ typedef struct LISTA{
     void 	(*desconectaNode)(struct LISTA*, node*);
     node*   (*rmNodeFinal)(struct LISTA*);
     node*	(*swap)(struct LISTA*, node*, node*);
-    int	    (*verificar)(struct LISTA*);
+    void    (*addListaFinal)(struct LISTA*, struct LISTA*);
 }lista;
 
 typedef struct VERTICE{
@@ -35,4 +35,5 @@ typedef struct GRAFO{
     void    (*printArestas)(struct GRAFO*);
     int     (*existeCaminho)(struct GRAFO*, aresta*);
     int     (*existeCiclo)(struct GRAFO*, vertice*);
+    void    (*exibeCaminhos)(struct GRAFO*, aresta*);
 }grafo;
