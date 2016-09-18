@@ -23,7 +23,6 @@ typedef struct VERTICE{
 
 
 typedef struct ARESTA{
-    char *valor;
     vertice *antecessor;
     vertice *sucessor;
     int     (*arestaEquals)(struct ARESTA*, struct ARESTA*);
