@@ -13,7 +13,7 @@ void addAresta(grafo *g, node* aresta){
 
 void printArestas(grafo *g){
     node *n = g->arestas->raiz;
-    printf("Arestas = {");
+    printf("\nArestas = {");
     while(n != NULL){
         aresta *aresta= n->elemento;
         //printf("(%s - ", (char*)aresta->valor);
@@ -23,8 +23,7 @@ void printArestas(grafo *g){
             printf(", ");
         }
     }
-    printf("}");
-    printf("\n");
+    printf("}\n");
 }
 
 void printGrafo(grafo *g){
