@@ -37,7 +37,7 @@ void printCaminhos(lista *list){
 
         n = n->proximo;
         if(n != NULL) {
-            printf(", ");
+            printf(" | ");
         }
     }
     printf("}\n");
