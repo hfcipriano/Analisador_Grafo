@@ -2,6 +2,7 @@
 Analisador de Grafos
 
 Exemplo : {
+
     grafo *g = newGrafo();
 
     g->addAresta(g, newNode(newAresta(newVertice("a"), newVertice("b"))));
