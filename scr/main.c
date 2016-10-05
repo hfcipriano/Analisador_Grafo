@@ -4,11 +4,10 @@
 #include "inc/bibliotecas.h"
 #include "inc/structs.h"
 
-extern lista *newLista();
-extern grafo *newGrafo();
-extern node *newNode(void*);
-extern vertice *newVertice(char*);
-extern aresta *newAresta(vertice*, vertice*);
+extern lista    *newLista();
+extern grafo    *inicGrafo();
+extern node     *newNode(void*);
+extern void     *insArco(grafo*, int, int, int);
 
 void exemploGrafoAciclico();
 void exemploGrafoCiclico();
@@ -24,8 +23,9 @@ int main(){
 
 void exemploGrafoAciclico(){
     printf("Grafo Aciclico\n");
-    grafo *g = newGrafo();
 
+    //TODO: Refactoring
+    /*grafo *g = inicGrafo();
     g->addAresta(g, newNode(newAresta(newVertice("1"), newVertice("2"))));
     g->addAresta(g, newNode(newAresta(newVertice("1"), newVertice("5"))));
     g->addAresta(g, newNode(newAresta(newVertice("1"), newVertice("4"))));
@@ -46,14 +46,22 @@ void exemploGrafoAciclico(){
     printf("\n%d", g->existeCiclo(g, newVertice("1")));
 
     //Task 4
-    g->exibeCaminhos(g, aresta);
+    g->exibeCaminhos(g, aresta);*/
 }
 
 void exemploGrafoCiclico(){
     printf("Grafo Ciclico\n");
-    grafo *g = newGrafo();
 
-    g->addAresta(g, newNode(newAresta(newVertice("1"), newVertice("2"))));
+    //TODO: Refactoring
+    /*grafo *g = inicGrafo();
+    g->insArco(g, 1, 2, 3);
+    g->insArco(g, 2, 1, 3);
+    g->insArco(g, 2, 3, x);
+    g->insArco(g, 2, 5, x);
+    g->insArco(g, 3, 4, x);
+    g->insArco(g, 4, 2, x);
+    g->insArco(g, 4, 5, x);
+    g->insArco(g, 4, 6, x);
     g->addAresta(g, newNode(newAresta(newVertice("2"), newVertice("1"))));
     g->addAresta(g, newNode(newAresta(newVertice("2"), newVertice("3"))));
     g->addAresta(g, newNode(newAresta(newVertice("2"), newVertice("5"))));
@@ -71,5 +79,5 @@ void exemploGrafoCiclico(){
     printf("\n%d", g->existeCiclo(g, newVertice("5")));
 
     //Task 4
-    g->exibeCaminhos(g, aresta);
+    g->exibeCaminhos(g, aresta);*/
 }

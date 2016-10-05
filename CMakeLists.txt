@@ -5,8 +5,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror")
 
 set(SOURCE_FILES
         scr/inc/bibliotecas.h scr/inc/structs.h
-        scr/tad/vertice/vertice.c scr/tad/vertice/vertice.h
-        scr/tad/aresta/aresta.c scr/tad/aresta/aresta.h
+        scr/tad/arco/arco.c scr/tad/arco/arco.h
         scr/tad/node/node.c scr/tad/node/node.h
         scr/tad/lista/lista.c scr/tad/lista/lista.h
         scr/tad/grafo/grafo.c scr/tad/grafo/grafo.h

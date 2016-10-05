@@ -5,21 +5,25 @@
 #include "grafo.h"
 
 extern lista* newLista();
+extern arco* newArco();
 extern node *newNode(void*);
 
 void printCaminho(lista *l);
 
-void addAresta(grafo *g, node* aresta){
-    g->arestas->addNodeFinal(g->arestas, aresta);
+void insArco(grafo *g, int antecessor, int sucessor, int custo){
+    arco *arco = newArco();
+    arco->antecessor = antecessor;
+    arco->sucessor = sucessor;
+
+    g->arcos->addNodeFinal(g->arcos, newNode(arco));
 }
 
-void printArestas(grafo *g){
-    node *n = g->arestas->raiz;
-    printf("\nArestas = {");
+void printArcos(grafo *g){
+    node *n = g->arcos->raiz;
+    printf("\nArcos = {");
     while(n != NULL){
-        aresta *aresta= n->elemento;
-        //printf("(%s - ", (char*)aresta->valor);
-        printf("(%s, %s)", (char*)aresta->antecessor->valor, (char*)aresta->sucessor->valor);
+        arco *arco= n->elemento;
+        printf("(%d, %d)", arco->antecessor, arco->sucessor);
         n = n->proximo;
         if(n != NULL) {
             printf(", ");
@@ -46,8 +50,8 @@ void printCaminhos(lista *list){
 void printCaminho(lista *l) {
     node *n = l->raiz;
     while(n != NULL){
-        aresta *aresta = n->elemento;
-        printf("(%s, %s)", aresta->antecessor->valor, aresta->sucessor->valor);
+        arco *arco = n->elemento;
+        printf("(%d, %d)", arco->antecessor, arco->sucessor);
         n = n->proximo;
         if(n != NULL) {
             printf(" -> ");
@@ -55,40 +59,40 @@ void printCaminho(lista *l) {
     }
 }
 
-lista* obterAntecessores(lista *l, vertice *antecessor) {
+lista* obterAntecessores(lista *l, int antecessor) {
     lista *lista = newLista();
     node *n = l->raiz;
     while(n != NULL){
-        aresta *aresta = n->elemento;
-        if(aresta->antecessor->verticeEquals(aresta->antecessor, antecessor)){
-            lista->addNodeFinal(lista, newNode(aresta));
+        arco *arco = n->elemento;
+        if(arco->antecessor == antecessor) {
+            lista->addNodeFinal(lista, newNode(arco));
         }
         n = n->proximo;
     }
     return lista;
 }
 
-lista* obterSucessores(lista *l, vertice *sucessor) {
+lista* obterSucessores(lista *l, int sucessor) {
     lista *lista = newLista();
     node *n = l->raiz;
     while(n != NULL){
-        aresta *aresta = n->elemento;
-        if(aresta->sucessor->verticeEquals(aresta->sucessor, sucessor)){
-            lista->addNodeFinal(lista, newNode(aresta));
+        arco *arco = n->elemento;
+        if(arco->sucessor == sucessor){
+            lista->addNodeFinal(lista, newNode(arco));
         }
         n = n->proximo;
     }
     return lista;
 }
 
-int buscarRelacao(lista *arestas, lista *antecessores, vertice *sucessor) {
+int buscarRelacao(lista *arestas, lista *antecessores, int sucessor) {
     node *n = antecessores->raiz;
     while(n != NULL){
-        aresta *aresta= n->elemento;
-        if(aresta->sucessor->verticeEquals(aresta->sucessor, sucessor)){
+        arco *arco= n->elemento;
+        if(arco->sucessor == sucessor){
             return 1;
         }
-        if(buscarRelacao(arestas, obterAntecessores(arestas, aresta->sucessor), sucessor)){
+        if(buscarRelacao(arestas, obterAntecessores(arestas, arco->sucessor), sucessor)){
             return 1;
         }
         n = n->proximo;
@@ -96,18 +100,18 @@ int buscarRelacao(lista *arestas, lista *antecessores, vertice *sucessor) {
     return 0;
 }
 
-lista *buscarRelacaoCompleta(lista *arestas, lista *antecessores, vertice *sucessor, lista *auxiliar) {
+lista *buscarRelacaoCompleta(lista *arestas, lista *antecessores, int sucessor, lista *auxiliar) {
     lista *caminhos = newLista();
 
     node *n = antecessores->raiz;
     while(n != NULL){
-        aresta *aresta= n->elemento;
-        auxiliar->addNodeFinal(auxiliar, newNode(aresta));
-        if(aresta->sucessor->verticeEquals(aresta->sucessor, sucessor)){
+        arco *arco= n->elemento;
+        auxiliar->addNodeFinal(auxiliar, newNode(arco));
+        if(arco->sucessor == sucessor){
             caminhos->addNodeFinal(caminhos, newNode(auxiliar));
         }
         else {
-            caminhos->addListaFinal(caminhos, buscarRelacaoCompleta(arestas, obterAntecessores(arestas, aresta->sucessor), sucessor, auxiliar));
+            caminhos->addListaFinal(caminhos, buscarRelacaoCompleta(arestas, obterAntecessores(arestas, arco->sucessor), sucessor, auxiliar));
         }
         n = n->proximo;
     }
@@ -120,21 +124,21 @@ lista *buscarRelacaoCompleta(lista *arestas, lista *antecessores, vertice *suces
  * @param Aresta contendo o vértice antecessor e o sucessor desejados
  * @return 1 para verdadeiro e 0 para falso
  */
-int existeCaminho(grafo *g, aresta *a){
-    node *n = g->arestas->raiz;
+int existeCaminho(grafo *g, arco *a){
+    node *n = g->arcos->raiz;
     while(n != NULL){
-        aresta *aresta= n->elemento;
-        if(aresta->arestaEquals(aresta, a)){
+        arco *arco= n->elemento;
+        if(arco->arcoEquals(arco, a)){
             return 1;
         }
         n = n->proximo;
     }
-    lista *sucessores = obterSucessores(g->arestas, a->sucessor);
-    lista *antecessores = obterAntecessores(g->arestas, a->antecessor);
+    lista *sucessores = obterSucessores(g->arcos, a->sucessor);
+    lista *antecessores = obterAntecessores(g->arcos, a->antecessor);
     if(sucessores->qtd == 0 || antecessores->qtd == 0){
         return 0;
     }
-    return buscarRelacao(g->arestas, antecessores, a->sucessor);
+    return buscarRelacao(g->arcos, antecessores, a->sucessor);
 }
 
 /**
@@ -143,9 +147,9 @@ int existeCaminho(grafo *g, aresta *a){
  * @param Vértice a ser utilizado como comparação
  * @return 1 para Verdadeiro e 0 para falso
  */
-int existeCiclo(grafo *g, vertice *v){
-    lista *antecessores = obterAntecessores(g->arestas, v);
-    return buscarRelacao(g->arestas, antecessores, v);
+int existeCiclo(grafo *g, int v){
+    lista *antecessores = obterAntecessores(g->arcos, v);
+    return buscarRelacao(g->arcos, antecessores, v);
 }
 
 /**
@@ -153,6 +157,6 @@ int existeCiclo(grafo *g, vertice *v){
  * @param g Grafo
  * @param a Aresta
  */
-void exibeCaminhos(grafo *g, aresta *a){
-    printCaminhos(buscarRelacaoCompleta(g->arestas, obterAntecessores(g->arestas, a->antecessor), a->sucessor, newLista()));
+void exibeCaminhos(grafo *g, arco *a){
+    printCaminhos(buscarRelacaoCompleta(g->arcos, obterAntecessores(g->arcos, a->antecessor), a->sucessor, newLista()));
 }

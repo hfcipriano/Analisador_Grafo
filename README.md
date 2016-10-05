@@ -3,7 +3,7 @@ Analisador de Grafos
 
 Exemplo : {
 
-    grafo *g = newGrafo();
+    grafo *g = inicGrafo();
 
     g->addAresta(g, newNode(newAresta(newVertice("a"), newVertice("b"))));
     g->addAresta(g, newNode(newAresta(newVertice("b"), newVertice("c"))));

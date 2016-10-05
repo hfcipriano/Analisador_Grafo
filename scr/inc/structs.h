@@ -1,5 +1,5 @@
 typedef struct NODE{
-    void  *elemento; //Ponteiro genérico para valores de Vertices e Arestas
+    void*   elemento;
     struct  NODE *proximo;
     struct  NODE *anterior;
 }node;
@@ -16,23 +16,28 @@ typedef struct LISTA{
     void    (*addListaFinal)(struct LISTA*, struct LISTA*);
 }lista;
 
-typedef struct VERTICE{
-    char    *valor;
-    int     (*verticeEquals)(struct VERTICE*, struct VERTICE*);
-}vertice;
-
-
-typedef struct ARESTA{
-    vertice *antecessor;
-    vertice *sucessor;
-    int     (*arestaEquals)(struct ARESTA*, struct ARESTA*);
-}aresta;
+typedef struct ARCO{
+    int     antecessor;
+    int     sucessor;
+    int     (*arcoEquals)(struct ARCO*, struct ARCO*);
+}arco;
 
 typedef struct GRAFO{
-    lista   *arestas;
-    void    (*addAresta)(struct GRAFO*, node*);
-    void    (*printArestas)(struct GRAFO*);
-    int     (*existeCaminho)(struct GRAFO*, aresta*);
-    int     (*existeCiclo)(struct GRAFO*, vertice*);
-    void    (*exibeCaminhos)(struct GRAFO*, aresta*);
+    lista   *arcos;
+    void    (*insArco)(struct GRAFO*, int, int, int);
+    void    (*elimArco)(struct GRAFO*, int, int);
+    void    (*custoArco)(struct GRAFO*, int, int);
+    lista   (*sucessores)(struct GRAFO*, int);
+    lista   (*ordemGrafo)(struct GRAFO*);
+    lista   (*destruirGrafo)(struct GRAFO*);
+    lista   (*carregarGrafo)(FILE*);
+    lista   (*salvarGrafo)(struct GRAFO*, FILE*);
+    lista   (*marcarVertice)(struct GRAFO*, int);
+    lista   (*desmarcarVertice)(struct GRAFO*, int);
+    lista   (*desmarcarGrafo)(struct GRAFO*);
+    lista   (*marcadoVertice)(struct GRAFO*, int v);
+
+    int     (*existeCaminho)(struct GRAFO*, arco*);
+    int     (*existeCiclo)(struct GRAFO*, int);
+    void    (*exibeCaminhos)(struct GRAFO*, arco*);
 }grafo;
