@@ -1,17 +1,18 @@
 //
-// Created by henrique on 08/09/16.
+// Created by henrique on 05/10/16.
 //
-#include "../../inc/bibliotecas.h"
-#include "arco.h"
 
-int arcoEquals(arco *this, arco *another){
+#include "../../inc/bibliotecas.h"
+#include "vertice.h"
+
+int verticeEquals(vertice *this, vertice *another){
     if(this == another){
         return bool_TRUE;
     }
     if(this == NULL || another == NULL){
         return bool_FALSE;
     }
-    if(this->antecessor->valor == another->antecessor->valor && this->sucessor->valor == another->sucessor->valor){
+    if(this->valor == another->valor){
         return bool_TRUE;
     }
     return bool_FALSE;

@@ -3,13 +3,15 @@
 //
 
 #include "../../inc/structs.h"
+
+extern vertice *newVertice(int);
+
 int arcoEquals(arco*, arco*);
 
-arco *newArco(int antecessor, int sucessor, int custo){
+arco *newArco(int antecessor, int sucessor){
     arco *a = (arco*)malloc(sizeof(arco));
-    a->antecessor = antecessor;
-    a->sucessor = sucessor;
-    a->custo = custo;
+    a->antecessor = newVertice(antecessor);
+    a->sucessor = newVertice(sucessor);
     a->arcoEquals = arcoEquals;
     return a;
 }

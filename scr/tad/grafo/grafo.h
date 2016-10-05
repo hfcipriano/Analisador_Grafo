@@ -8,8 +8,8 @@ extern lista *newLista();
 void    insArco(grafo*, int, int, int);
 void    elimArco(grafo*, int, int);
 int     custoArco(grafo*, int, int);
-lista   *obterSucessores(lista*, int);
-lista   *obterAntecessores(lista*, int);
+lista   *obterSucessores(lista*, vertice*);
+lista   *obterAntecessores(lista*, vertice*);
 int     ordemGrafo(grafo*);
 void    destruirGrafo(grafo*);
 grafo   *carregarGrafo(FILE*);
@@ -17,7 +17,7 @@ void    salvarGrafo(grafo*, FILE*);
 void    marcarVertice(grafo*, int);
 void    desmarcarVertice(grafo*, int);
 void    desmarcarGrafo(grafo*);
-void    marcadoVertice(grafo*, int v);
+int     marcadoVertice(grafo*, int);
 
 int     existeCaminho(grafo*, arco*);
 int     existeCiclo(grafo*, int);
@@ -35,7 +35,7 @@ grafo *inicGrafo(){
     g->destruirGrafo = destruirGrafo;
     g->carregarGrafo = carregarGrafo;
     g->salvarGrafo = salvarGrafo;
-    g->marcadoVertice = marcarVertice;
+    g->marcarVertice = marcarVertice;
     g->desmarcarVertice = desmarcarVertice;
     g->desmarcarGrafo = desmarcarGrafo;
     g->marcadoVertice = marcadoVertice;

@@ -16,9 +16,15 @@ typedef struct LISTA{
     void    (*addListaFinal)(struct LISTA*, struct LISTA*);
 }lista;
 
+typedef struct VERTICE{
+    int     valor;
+    int     bool_marcardo;
+    int     (*verticeEquals)(struct VERTICE*, struct VERTICE*);
+}vertice;
+
 typedef struct ARCO{
-    int     antecessor;
-    int     sucessor;
+    vertice *antecessor;
+    vertice *sucessor;
     int     custo;
     int     (*arcoEquals)(struct ARCO*, struct ARCO*);
 }arco;
@@ -28,8 +34,8 @@ typedef struct GRAFO{
     void            (*insArco)(struct GRAFO*, int, int, int);
     void            (*elimArco)(struct GRAFO*, int, int);
     int             (*custoArco)(struct GRAFO*, int, int);
-    lista*          (*obterSucessores)(lista*, int);
-    lista*          (*obterAntecessores)(lista*, int);
+    lista*          (*obterSucessores)(lista*, vertice*);
+    lista*          (*obterAntecessores)(lista*, vertice*);
     int             (*ordemGrafo)(struct GRAFO*);
     void            (*destruirGrafo)(struct GRAFO*);
     struct GRAFO*   (*carregarGrafo)(FILE*);
@@ -37,7 +43,7 @@ typedef struct GRAFO{
     void            (*marcarVertice)(struct GRAFO*, int);
     void            (*desmarcarVertice)(struct GRAFO*, int);
     void            (*desmarcarGrafo)(struct GRAFO*);
-    void            (*marcadoVertice)(struct GRAFO*, int v);
+    int             (*marcadoVertice)(struct GRAFO*, int v);
 
     int             (*existeCaminho)(struct GRAFO*, arco*);
     int             (*existeCiclo)(struct GRAFO*, int);

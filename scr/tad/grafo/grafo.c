@@ -5,10 +5,12 @@
 #include "grafo.h"
 
 extern lista* newLista();
-extern arco* newArco();
+extern arco* newArco(int, int);
+extern vertice* newVertice(int);
 extern node *newNode(void*);
 
-void printCaminho(lista *l);
+void printCaminho(lista*);
+vertice *obterVertice(grafo*, int);
 
 /**
  * Insere Arco no Grafo
@@ -18,9 +20,7 @@ void printCaminho(lista *l);
  * @param custo Custo do Arco
  */
 void insArco(grafo *g, int antecessor, int sucessor, int custo){
-    arco *arco = newArco();
-    arco->antecessor = antecessor;
-    arco->sucessor = sucessor;
+    arco *arco = newArco(antecessor, sucessor);
     arco->custo = custo;
 
     g->arcos->addNodeFinal(g->arcos, newNode(arco));
@@ -36,7 +36,7 @@ void elimArco(grafo *g, int antecessor, int sucessor){
     node *n = g->arcos->raiz;
     while(n != NULL){
         arco *arco= n->elemento;
-        if(arco->antecessor == antecessor && arco->sucessor == sucessor){
+        if(arco->arcoEquals(arco, newArco(antecessor, sucessor))){
             g->arcos->desconectaNode(g->arcos, n);
             return;
         }
@@ -55,7 +55,7 @@ int custoArco(grafo *g, int antecessor, int sucessor){
     node *n = g->arcos->raiz;
     while(n != NULL){
         arco *arco= n->elemento;
-        if(arco->antecessor == antecessor && arco->sucessor == sucessor){
+        if(arco->arcoEquals(arco, newArco(antecessor, sucessor))){
             return arco->custo;
         }
         n = n->proximo;
@@ -80,20 +80,53 @@ void salvarGrafo(grafo *g, FILE *arquivo){
     //TODO: Implementar
 }
 
-void marcarVertice(grafo* g, int vertice){
-    //TODO: Implementar
-};
+void marcarVertice(grafo* g, int v){
+    vertice *vertice = obterVertice(g, v);
+    if(vertice != NULL){
+        vertice->bool_marcardo = bool_TRUE;
+    }
+}
 
-void desmarcarVertice(grafo* g, int vertice){
-    //TODO: Implementar
+void desmarcarVertice(grafo* g, int v){
+    vertice *vertice = obterVertice(g, v);
+    if(vertice != NULL){
+        vertice->bool_marcardo = bool_FALSE;
+    }
 };
 
 void desmarcarGrafo(grafo* g){
-    //TODO: Implementar
+    node *n = g->arcos->raiz;
+    while(n != NULL){
+        arco *arco= n->elemento;
+
+        arco->antecessor->bool_marcardo = bool_FALSE;
+        arco->sucessor->bool_marcardo = bool_FALSE;
+
+        n = n->proximo;
+    }
 };
 
-void marcadoVertice(grafo* g, int vertice){
-    //TODO: Implementar
+int marcadoVertice(grafo* g, int v){
+    vertice *vertice = obterVertice(g, v);
+    if(vertice != NULL && vertice->bool_marcardo){
+        return bool_TRUE;
+    }
+    return bool_FALSE;
+};
+
+vertice *obterVertice(grafo *g, int v) {
+    node *n = g->arcos->raiz;
+    while(n != NULL){
+        arco *arco= n->elemento;
+        if(arco->antecessor->verticeEquals(arco->antecessor, newVertice(v))){
+            return arco->antecessor;
+        }
+        if(arco->sucessor->verticeEquals(arco->sucessor, newVertice(v))) {
+            return arco->sucessor;
+        }
+        n = n->proximo;
+    }
+    return NULL;
 };
 
 void printCaminhos(lista *list){
@@ -115,7 +148,7 @@ void printCaminho(lista *l) {
     node *n = l->raiz;
     while(n != NULL){
         arco *arco = n->elemento;
-        printf("(%d, %d)", arco->antecessor, arco->sucessor);
+        printf("(%d, %d)", arco->antecessor->valor, arco->sucessor->valor);
         n = n->proximo;
         if(n != NULL) {
             printf(" -> ");
@@ -123,12 +156,12 @@ void printCaminho(lista *l) {
     }
 }
 
-lista* obterAntecessores(lista *l, int antecessor) {
+lista* obterAntecessores(lista *l, vertice *antecessor) {
     lista *lista = newLista();
     node *n = l->raiz;
     while(n != NULL){
         arco *arco = n->elemento;
-        if(arco->antecessor == antecessor) {
+        if(arco->antecessor->verticeEquals(arco->antecessor, antecessor)) {
             lista->addNodeFinal(lista, newNode(arco));
         }
         n = n->proximo;
@@ -136,12 +169,12 @@ lista* obterAntecessores(lista *l, int antecessor) {
     return lista;
 }
 
-lista* obterSucessores(lista *l, int sucessor) {
+lista* obterSucessores(lista *l, vertice *sucessor) {
     lista *lista = newLista();
     node *n = l->raiz;
     while(n != NULL){
         arco *arco = n->elemento;
-        if(arco->sucessor == sucessor){
+        if(arco->sucessor->verticeEquals(arco->sucessor, sucessor)){
             lista->addNodeFinal(lista, newNode(arco));
         }
         n = n->proximo;
@@ -153,25 +186,25 @@ int buscarRelacao(lista *arestas, lista *antecessores, int sucessor) {
     node *n = antecessores->raiz;
     while(n != NULL){
         arco *arco= n->elemento;
-        if(arco->sucessor == sucessor){
-            return 1;
+        if(arco->sucessor->valor == sucessor){
+            return bool_TRUE;
         }
         if(buscarRelacao(arestas, obterAntecessores(arestas, arco->sucessor), sucessor)){
-            return 1;
+            return bool_TRUE;
         }
         n = n->proximo;
     }
-    return 0;
+    return bool_FALSE;
 }
 
-lista *buscarRelacaoCompleta(lista *arestas, lista *antecessores, int sucessor, lista *auxiliar) {
+lista *buscarRelacaoCompleta(lista *arestas, lista *antecessores, vertice *sucessor, lista *auxiliar) {
     lista *caminhos = newLista();
 
     node *n = antecessores->raiz;
     while(n != NULL){
         arco *arco= n->elemento;
         auxiliar->addNodeFinal(auxiliar, newNode(arco));
-        if(arco->sucessor == sucessor){
+        if(arco->sucessor->verticeEquals(arco->sucessor, sucessor)){
             caminhos->addNodeFinal(caminhos, newNode(auxiliar));
         }
         else {
@@ -193,16 +226,16 @@ int existeCaminho(grafo *g, arco *a){
     while(n != NULL){
         arco *arco= n->elemento;
         if(arco->arcoEquals(arco, a)){
-            return 1;
+            return bool_TRUE;
         }
         n = n->proximo;
     }
     lista *sucessores = obterSucessores(g->arcos, a->sucessor);
     lista *antecessores = obterAntecessores(g->arcos, a->antecessor);
     if(sucessores->qtd == 0 || antecessores->qtd == 0){
-        return 0;
+        return bool_FALSE;
     }
-    return buscarRelacao(g->arcos, antecessores, a->sucessor);
+    return buscarRelacao(g->arcos, antecessores, a->sucessor->valor);
 }
 
 /**
@@ -212,7 +245,7 @@ int existeCaminho(grafo *g, arco *a){
  * @return 1 para Verdadeiro e 0 para falso
  */
 int existeCiclo(grafo *g, int v){
-    lista *antecessores = obterAntecessores(g->arcos, v);
+    lista *antecessores = obterAntecessores(g->arcos, newVertice(v));
     return buscarRelacao(g->arcos, antecessores, v);
 }
 
