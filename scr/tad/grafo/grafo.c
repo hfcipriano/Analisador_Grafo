@@ -10,27 +10,91 @@ extern node *newNode(void*);
 
 void printCaminho(lista *l);
 
+/**
+ * Insere Arco no Grafo
+ * @param g Grafo
+ * @param vertice antecessor
+ * @param vertice sucessor
+ * @param custo Custo do Arco
+ */
 void insArco(grafo *g, int antecessor, int sucessor, int custo){
     arco *arco = newArco();
     arco->antecessor = antecessor;
     arco->sucessor = sucessor;
+    arco->custo = custo;
 
     g->arcos->addNodeFinal(g->arcos, newNode(arco));
 }
 
-void printArcos(grafo *g){
+/**
+ * Remove o arco do Grafo caso ele exista
+ * @param g Grafo
+ * @param antecessor Vértice do arco a ser removido
+ * @param sucessor Vértice do arco a ser removido
+ */
+void elimArco(grafo *g, int antecessor, int sucessor){
     node *n = g->arcos->raiz;
-    printf("\nArcos = {");
     while(n != NULL){
         arco *arco= n->elemento;
-        printf("(%d, %d)", arco->antecessor, arco->sucessor);
-        n = n->proximo;
-        if(n != NULL) {
-            printf(", ");
+        if(arco->antecessor == antecessor && arco->sucessor == sucessor){
+            g->arcos->desconectaNode(g->arcos, n);
+            return;
         }
+        n = n->proximo;
     }
-    printf("}\n");
 }
+
+/**
+ * Retorna o custo do arco caso exista. Caso contrário retorna -1
+ * @param g Grafo
+ * @param antecessor
+ * @param sucessor
+ * @return Custo do arco ou -1 quando não existir
+ */
+int custoArco(grafo *g, int antecessor, int sucessor){
+    node *n = g->arcos->raiz;
+    while(n != NULL){
+        arco *arco= n->elemento;
+        if(arco->antecessor == antecessor && arco->sucessor == sucessor){
+            return arco->custo;
+        }
+        n = n->proximo;
+    }
+    return -1;
+};
+
+int ordemGrafo(grafo *g){
+    return g->arcos->qtd * 2;
+};
+
+void destruirGrafo(grafo *g){
+    free(g);
+};
+
+grafo *carregarGrafo(FILE *arquivo){
+    //TODO: Implementar
+    return NULL;
+};
+
+void salvarGrafo(grafo *g, FILE *arquivo){
+    //TODO: Implementar
+}
+
+void marcarVertice(grafo* g, int vertice){
+    //TODO: Implementar
+};
+
+void desmarcarVertice(grafo* g, int vertice){
+    //TODO: Implementar
+};
+
+void desmarcarGrafo(grafo* g){
+    //TODO: Implementar
+};
+
+void marcadoVertice(grafo* g, int vertice){
+    //TODO: Implementar
+};
 
 void printCaminhos(lista *list){
     node *n = list->raiz;

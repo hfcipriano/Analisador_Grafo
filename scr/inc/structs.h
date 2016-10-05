@@ -19,25 +19,27 @@ typedef struct LISTA{
 typedef struct ARCO{
     int     antecessor;
     int     sucessor;
+    int     custo;
     int     (*arcoEquals)(struct ARCO*, struct ARCO*);
 }arco;
 
 typedef struct GRAFO{
-    lista   *arcos;
-    void    (*insArco)(struct GRAFO*, int, int, int);
-    void    (*elimArco)(struct GRAFO*, int, int);
-    void    (*custoArco)(struct GRAFO*, int, int);
-    lista   (*sucessores)(struct GRAFO*, int);
-    lista   (*ordemGrafo)(struct GRAFO*);
-    lista   (*destruirGrafo)(struct GRAFO*);
-    lista   (*carregarGrafo)(FILE*);
-    lista   (*salvarGrafo)(struct GRAFO*, FILE*);
-    lista   (*marcarVertice)(struct GRAFO*, int);
-    lista   (*desmarcarVertice)(struct GRAFO*, int);
-    lista   (*desmarcarGrafo)(struct GRAFO*);
-    lista   (*marcadoVertice)(struct GRAFO*, int v);
+    lista           *arcos;
+    void            (*insArco)(struct GRAFO*, int, int, int);
+    void            (*elimArco)(struct GRAFO*, int, int);
+    int             (*custoArco)(struct GRAFO*, int, int);
+    lista*          (*obterSucessores)(lista*, int);
+    lista*          (*obterAntecessores)(lista*, int);
+    int             (*ordemGrafo)(struct GRAFO*);
+    void            (*destruirGrafo)(struct GRAFO*);
+    struct GRAFO*   (*carregarGrafo)(FILE*);
+    void            (*salvarGrafo)(struct GRAFO*, FILE*);
+    void            (*marcarVertice)(struct GRAFO*, int);
+    void            (*desmarcarVertice)(struct GRAFO*, int);
+    void            (*desmarcarGrafo)(struct GRAFO*);
+    void            (*marcadoVertice)(struct GRAFO*, int v);
 
-    int     (*existeCaminho)(struct GRAFO*, arco*);
-    int     (*existeCiclo)(struct GRAFO*, int);
-    void    (*exibeCaminhos)(struct GRAFO*, arco*);
+    int             (*existeCaminho)(struct GRAFO*, arco*);
+    int             (*existeCiclo)(struct GRAFO*, int);
+    void            (*exibeCaminhos)(struct GRAFO*, arco*);
 }grafo;
