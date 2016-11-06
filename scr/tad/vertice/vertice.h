@@ -9,6 +9,7 @@ int verticeEquals(vertice*, vertice*);
 vertice *newVertice(int valor){
     vertice *v = (vertice*)malloc(sizeof(vertice));
     v->valor = valor;
+    v->verticeEquals = verticeEquals;
     v->bool_marcardo = bool_FALSE;
 
     return v;
