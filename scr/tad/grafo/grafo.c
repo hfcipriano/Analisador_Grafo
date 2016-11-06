@@ -186,6 +186,10 @@ int buscarRelacao(lista *arestas, lista *antecessores, int sucessor) {
     node *n = antecessores->raiz;
     while(n != NULL){
         arco *arco= n->elemento;
+        if(arco->antecessor->bool_marcardo){
+            return bool_FALSE;
+        }
+        arco->antecessor->bool_marcardo = bool_TRUE;
         if(arco->sucessor->valor == sucessor){
             return bool_TRUE;
         }
