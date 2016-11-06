@@ -87,7 +87,9 @@ void addListaFinal(lista *l, lista *nova){
     }
     else {
         l->folha->proximo = nova->raiz;
-        nova->raiz->anterior = l->folha;
+        if(nova->raiz != NULL) {
+            nova->raiz->anterior = l->folha;
+        }
         l->qtd = l->qtd + nova->qtd;
     }
 }
