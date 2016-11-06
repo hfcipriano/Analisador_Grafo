@@ -187,13 +187,13 @@ int buscarRelacao(lista *arestas, lista *antecessores, int sucessor) {
     node *n = antecessores->raiz;
     while(n != NULL){
         arco *arco= n->elemento;
+        if(arco->sucessor->valor == sucessor){
+            return bool_TRUE;
+        }
         if(arco->antecessor->bool_marcardo){
             return bool_FALSE;
         }
         arco->antecessor->bool_marcardo = bool_TRUE;
-        if(arco->sucessor->valor == sucessor){
-            return bool_TRUE;
-        }
         if(buscarRelacao(arestas, obterAntecessores(arestas, arco->sucessor), sucessor)){
             return bool_TRUE;
         }
@@ -234,6 +234,7 @@ lista *buscarRelacaoCompleta(lista *arestas, lista *antecessores, vertice *suces
  * @return 1 para verdadeiro e 0 para falso
  */
 int existeCaminho(grafo *g, arco *a){
+    desmarcarGrafo(g);
     node *n = g->arcos->raiz;
     while(n != NULL){
         arco *arco= n->elemento;
@@ -257,6 +258,7 @@ int existeCaminho(grafo *g, arco *a){
  * @return 1 para Verdadeiro e 0 para falso
  */
 int existeCiclo(grafo *g, int v){
+    desmarcarGrafo(g);
     lista *antecessores = obterAntecessores(g->arcos, newVertice(v));
     return buscarRelacao(g->arcos, antecessores, v);
 }
@@ -267,5 +269,7 @@ int existeCiclo(grafo *g, int v){
  * @param a Aresta
  */
 void exibeCaminhos(grafo *g, arco *a){
+    desmarcarGrafo(g);
     printCaminhos(buscarRelacaoCompleta(g->arcos, obterAntecessores(g->arcos, a->antecessor), a->sucessor, newLista()));
 }
+
