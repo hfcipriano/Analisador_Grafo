@@ -131,6 +131,7 @@ vertice *obterVertice(grafo *g, int v) {
 
 void printCaminhos(lista *list){
     node *n = list->raiz;
+    printf("\nNumero de caminhos: %d", list->qtd);
     printf("\nCaminhos = {");
     while(n != NULL){
         lista *l= n->elemento;
@@ -207,9 +208,16 @@ lista *buscarRelacaoCompleta(lista *arestas, lista *antecessores, vertice *suces
     node *n = antecessores->raiz;
     while(n != NULL){
         arco *arco= n->elemento;
+
+        if(arco->antecessor->bool_marcardo){
+            return newLista();
+        }
+        arco->antecessor->bool_marcardo = bool_TRUE;
+
         auxiliar->addNodeFinal(auxiliar, newNode(arco));
         if(arco->sucessor->verticeEquals(arco->sucessor, sucessor)){
             caminhos->addNodeFinal(caminhos, newNode(auxiliar));
+            auxiliar = newLista();
         }
         else {
             caminhos->addListaFinal(caminhos, buscarRelacaoCompleta(arestas, obterAntecessores(arestas, arco->sucessor), sucessor, auxiliar));
